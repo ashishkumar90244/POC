@@ -1,0 +1,30 @@
+{
+  "monthly": [
+    {
+      "name": "Basic Monthly",
+      "price": 9.99
+    },
+    {
+      "name": "Standard Monthly",
+      "price": 19.99
+    },
+    {
+      "name": "Premium Monthly",
+      "price": 29.99
+    }
+  ],
+  "yearly": [
+    {
+      "name": "Basic Yearly",
+      "price": 99.99
+    },
+    {
+      "name": "Standard Yearly",
+      "price": 199.99
+    },
+    {
+      "name": "Premium Yearly",
+      "price": 299.99
+    }
+  ]
+}

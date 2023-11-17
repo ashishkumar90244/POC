@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Subscription Plans</title>
+    <script >
+        function fetchPlans(duration) {
+    fetch('/plan-data', { method: 'GET' })
+        .then(response => response.json())
+        .then(plans => displayPlans(plans, duration))
+        .catch(error => console.error('Error fetching plans:', error));
+}
+
+function displayPlans(plans, duration) {
+    const plansContainer = document.getElementById('plansContainer');
+    plansContainer.innerHTML = ''; // Clear previous content
+
+    const filteredPlans = duration === 'monthly' ? plans.monthly : plans.yearly;
+
+    // Create a table element
+    const table = document.createElement('table');
+    table.className = 'w-full border-collapse border';
+
+    // Create table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    const nameHeader = document.createElement('th');
+    nameHeader.className = 'border p-2';
+    nameHeader.textContent = 'Plan Name';
+
+    const priceHeader = document.createElement('th');
+    priceHeader.className = 'border p-2';
+    priceHeader.textContent = 'Price';
+
+    headerRow.appendChild(nameHeader);
+    headerRow.appendChild(priceHeader);
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create table body
+    const tbody = document.createElement('tbody');
+
+    filteredPlans.forEach(plan => {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.className = 'border p-2';
+        nameCell.textContent = plan.name;
+
+        const priceCell = document.createElement('td');
+        priceCell.className = 'border p-2';
+        priceCell.textContent = `$${plan.price}`;
+
+        row.appendChild(nameCell);
+        row.appendChild(priceCell);
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+
+    plansContainer.appendChild(table);
+}
+
+
+
+    </script>
+</head>
+<body class="bg-gray-100 p-8">
+    <%- include('partials/header',{username:username}) %>
+
+    <div class="container mx-auto bg-white p-8 rounded shadow-md">
+        <h1 class="text-3xl font-semibold mb-4">Subscription Plans</h1>
+
+        <div class="flex justify-between mb-4">
+            <button onclick="fetchPlans('monthly')" class="px-4 py-2 bg-blue-500 text-white rounded">Monthly</button>
+            <button onclick="fetchPlans('yearly')" class="px-4 py-2 bg-green-500 text-white rounded">Yearly</button>
+            
+        </div>
+
+        <div id="plansContainer"></div>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded">next</button>
+
+    </div>
+
+    
+</body>
+</html>
